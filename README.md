@@ -1,265 +1,362 @@
-# Reversi Project Template
+# COMP90054 AI Planning for Autonomy - Assignment 1 - Search 
 
 You must read fully and carefully the assignment specification and instructions detailed in this file. You are NOT to modify this file in any way.
 
-* **Course:** [COMP90054 AI Planning for Autonomy](https://handbook.unimelb.edu.au/subjects/comp90054) @ Semester 2, 2022
+* **Course:** [COMP90054 AI Planning for Autonomy](https://handbook.unimelb.edu.au/subjects/comp90054) @ Semester 2, 2023
 * **Instructor:** Dr. Nir Lipovetzky and Prof. Adrian Pearce
-* **Deadline Team Registration:** Monday 19th September, 2022 @ 11:59pm (start of Week 9)
-* **Deadline Preliminary Submission:** Monday 3rd October, 2022 @ 11:59pm (start of Week 10)
-* **Deadline Wiki, Video & Final Submission:** Monday 17th October, 2022 @ 11:59pm (start of Week 12)
-* **Course Weight:** 5% (preliminary competition) + 10% (final competition) + 5% (video) + 15% (Wiki)
-* **Assignment type:**: Groups of 3
-* **CLOs covered:** 1-5
-* **Submission method:** via git tagging (see below for instructions)
+* **Please note that we have two deadlines**
+* **Code Deadline:** Wednesday 16th August, 2023 @ 11:59pm 
+* **Self-Evaluation Deadline:** Friday 18th August, 2023 @ 11:59pm (end of Week 4)
+* **Course Weight:** 10%
+* **Assignment type:**: Individual (you can work with another student on the code, but submit your own repo and self-evaluation)
+* **ILOs covered:** 1, 2, and 3
+* **Submission method:** via GitHub using tagging (see [Submission Instructions](#submission-instructions) below for instructions)
 
-The purpose of this project is to implement a Reversi Autonomous Agent that can play and compete in the UoM COMP90054-2022 Reversi:
+The **aim of this assignment** is to get you acquainted with AI search techniques and how to derive heuristics in Pacman, as well as to understand how to model a problem with python.
 
  <p align="center"> 
-    <img src="img/sample.png" alt="sample image for GUI" width="505">
+    <img src="logo-p1.jpg" alt="logo project 1">
  </p>
+
+## Ungrading
+In COMP90054, we will use ungrading for the coursework component of the subject. Even though we are required to provide a grade out of 100, throughout the assignments, subject staff will not assign grades to anyone. Instead, we will use a combination of techniques that uses each student’s reflection of their own learning to provide grades. 
+
+#### Why use ungrading? 
+
+Who is better at assessing how much a student has leant: the student themselves, or a subject tutor/coordinator? I don’t imagine anyone would disagree that the student does. So why don’t we give students a say? For the coursework component of COMP90054 (assignments 1-3), the model that we employ cedes the power responsibility for monitoring and assessing progress to the students themselves. 
+
+Research shows that grades and rubrics have three reliable effects on students in a class: 
+1. they tend to think less deeply; 
+2. they avoid taking risks; and 
+3. they lose interest in the learning itself, We want to encourage all three of these things. 
+
+How will a student know if they are doing well? They will receive feedback on assessment throughout the semester. Feedback will be qualitative with broad ratings: needs further work; good; or outstanding; but these ratings will NOT be used for grading. Our detail feedback will be focused on your self-evaluation to facilitate and maximise your learning. 
+
+<!--### Contract grading -->
+
+Consider the following:
+
+- You have a good idea of what marks you will get prior to receiving them through our automated tests, this self-feedback approach means that if you want a higher mark, you know what you may have to do.
+
+- Tell us what you tried and didn't work, tell us what you learned while coming up with the solution, tell us why your solution doesn't pass a test, and how would you fix it if you had more time. All this reflection and evaluation give us better tools to assess your learning and provide you with useful feedback.
+
+- Since the assessment is self-directed, you understand well what your code is meant to do and the important lessons you acquired and want to convey with your code to us. It's easier for you to spend 10 - 20 hours with your code and come up with a comprehensive assessment than one tutor to do this for 30 - 50 students.
+
+Some of the possible reasons for mark misalignment of ungrading:
+
+- You're applying the knowledge you've learned to the task, *it is possible you've missed something critical*, even if you receive feedback about your assignment, the level of importance of each error or issue may not be clear. 
+
+- *Perception of feedback length vs lost marks*. Contrast how seeing you lost 2 marks for returning suboptimal solutions suggests it is very wrong even with a small bit of feedback, and how seeing two pages of comments for improvements but no mark deduction suggests that there's lots to improve, but the quality of your solution is still ultimately good for someone early on their AI journey. Concentrate on the feedback. As a rule of thumb, give a good overview of your learning in your self-evaluation, It will significantly help tutors to provide feedback on your learning, which is what you want at this stage.
+
+- In the ungrading process, *you'll likely need to develop methods for verifying the correctness of your results*, not relying only on the more centralised and inflexible nature of automated tests approach. This is often extremely valuable in and of itself, as it forces you to design tests for your code, a vital principle in code development. That said, the centralised automated tests should give you a grounding sense of the correctness of your code.
+
+#### Length of the Self-Evaluation
+
+There's a tendency to conflate writing a lot for the self evaluation as being positive. On the contrary, be concise, and to the point. Practice your ability to synthesise important information, it is important for your communication skills. A self-assessment can be short AND good. There is no need to write pages of text -- just justify why you did a good job and learnt things. 
+
+#### Final words (about ungrading)
+The objective is to reflect on your own learning, and take more risks, as you can justify it in your evaluation. In our positive experience with ungrading last semester in COMP90054, and corroborated by [research](https://www.jessestommel.com/how-to-ungrade/) (see bibliography, e.g. [Teaching more by grading less](https://www.lifescied.org/doi/full/10.1187/cbe.cbe-14-03-0054)), reasons people liked ungrading are chiefly:
+
+- Independence and autonomy: people felt more responsible for their own learning and appreciated the additional autonomy and independence that ungrading provided.
+
+- Reduced the stress of trying to get everything right and figure out what the staff wanted to see.
+
+- Allowed people to explore and take a few more risks, because if they failed, learning still occurred.
+
+
+#### Collaboration
+Assignment 1 can be completed individually or in pairs. We encourage pairs to work together to learn from each other; not to simple split the tasks for efficiency. But we will not monitor this – it is your responsibility. You can submit different solutions, we just want to encourage collaboration.
+
+<!-- Each submission will contain an individual short self-reflection. -->
+For the student works in pair, you must submit an individual short self evaluation ([SELFEV.md](SELFEV.md)). In addition, you can either submit the same coding solution (both need to submit in their own repo using tag), or submit different coding solution. 
+
+We encourage students to derive their own tests and share them with others to help with learning. 
+
+## Your tasks
+
+
+Since the purpose of assignments is to help you learn more, marks should not be assigned only on whether your code passes a few test cases but also on how much you have learnt.
+
+Who knows better about whether you have learnt from this assignment other than yourself? We ask you to evaluate your work.
+
+Each submission will contain a short self-reflection on what the student learnt, how they approached the tasks (including writing new tests) and will give the student a chance to argue that, even though they didn’t complete a task, they tried and learnt from it. 
+
+More generally, In the past we saw several people either not submitting a self evaluation or not really taking the time to reflect on their learning. In this assignment, we make the expectations clearer: **students are marked based on their self evaluation.**
+
+<!-- We will provide the feedback of your code, which from running the autograder on the server.  -->
+Your task contains programming excercises with increasing difficulty. This is where we give students control over how much assessment they want to complete or have the time to complete.
+* [Programming Tasks](#programming-tasks):
+    *  [Practice](#practice)
+    *  [Part 0 (0 marks)](#part-0-0-mark-but-critical)
+    *  [Part 1](#part-1-3-marks)
+    *  [Part 2](#part-2-3-marks)
+    *  [Part 3](#part-3-4-marks)
+* [Self Evaluation Task (10 marks)](#self-evaluation-task-10-marks)
+* [Submission Instruction](#submission-instructions)
+
+
+<!-- If you want to provide a report with your submission (e.g., reflections, acknowledgments, etc.), please do so in file [REPORT.md](REPORT.md). -->
+### Programming Tasks:
+
+You **must build and submit your solution** using the sample code we provide you in this repository, which is different from the original [UC Berkley code base](https://inst.eecs.berkeley.edu/~cs188/fa18/project1.html). 
+
+* Please remember to complete the [SELFEV.md](SELFEV.md) file with your individual submission details (so we can identify you when it comes time to submit). 
+
+* You should **only work and modify** files [search.py](search.py) and [searchAgents.py](searchAgents.py) in doing your solution. Do not change the other Python files in this distribution.
+
+* Your code **must run _error-free_ on Python 3.8**. Staff will not debug/fix any code. Using a different version will risk your program not running with the Pacman infrastructure or autograder. 
+
+* Your code **must not have any personal information**, like your student number or your name. That info should go in the [SELFEV.md](SELFEV.md) file, as per instructions above. If you use an IDE that inserts your name, student number, or username, you should disable that.
+
+* **Assignment 1 FAQ** is available to answer common questions you might have about [Assignment 1 on ED](https://edstem.org/au/courses/12628/discussion/1460556)
+
+* **Getting started on GitHub** - the video below explains how to **clone**, **git add**, **commit** and **push** while developing your solution for this assignment:
+
+[![How to work with github](img/loom_video.png)](https://www.loom.com/share/ae7e93ab8bec40be96b638c49081e3d9)
+
+#### Setting up the environment
+
+* You can set up your local environment:
+    * You can install Python 3.8 from the [official site](https://peps.python.org/pep-0569/), or set up a [Conda environment](https://www.freecodecamp.org/news/why-you-need-python-environments-and-how-to-manage-them-with-conda-85f155f4353c/) or an environment with [PIP+virtualenv](https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/26/python-virtual-env/). 
+    * You need to install additional package (func_timeout) using:  `pip3 install func_timeout`
+
+* Alternatively, you can use docker:
+    * You need to install docker from the [official site](https://docs.docker.com/get-docker/)
+    * Please check [Docker Run](#docker-run) to run your code.
+
+
+
+
+#### Practice
+
+To familiarize yourself with basic search algorithms and the Pacman environment, it is a good start to implement the tasks at https://inst.eecs.berkeley.edu/~cs188/fa18/project1.html, especially the first four tasks; however, there is no requirement to do so.
+
+You should code your implementations *only* at the locations in the template code indicated by ```***YOUR CODE HERE***``` in files [search.py](search.py) and [searchAgents.py](searchAgents.py), please do not change code at any other locations or in any other files.
+
+
+#### Part 0 (0 mark, but critical)
+
+
+This is a great way to test that you understand the submission instructions correctly, and how to get feedback from our hidden test-cases as many times as you want. Here are the steps:
+
+* Please tag your solution with `test-submission`. If you are not familiar with tag, please check [tag hints](#git-hints-on-tags)
+* We are going to run your code in our server. You can check your result from this [link](http://comp90054.ml/) after a few minutes. This can test your code for part 1, 2 and 3.
+
+#### Part 1 
+
+Implement the **Enforced Hill Climbing (EHC) algorithm** discussed in lectures, using Manhattan Distance as the heuristic, by inserting your code into the template indicated by comment ```***YOUR CODE HERE FOR TASK 1***```. You can see the code location following this link: [search.py#L150](search.py#L150).
+
+> **Note** 
+> You don't have to implement Manhattan Distance, as this has already been implemented for you in the codebase. You will need to call the heuristic from your implementation of EHC. You should be able to test the algorithm using the following command:
+
+```
+python pacman.py -l mediumMaze -p SearchAgent -a fn=ehc,heuristic=manhattanHeuristic
+```
+
+Other layouts are available in the [layouts](layouts/) directory, and you can easily create you own. When you use the `autograder` (see section [cheking submission](#checking-your-submission) ), it will try to validate your solution by looking for an exact match with your output. The successors list are expected to be visited in the original order given by the API. 
+
+#### Part 2
+
+In this part we will help you prove to yourself that you have all the ingredients to pick up many new search algorithms, tapping to knowledge you acquired in the lectures and tutorials.
+
+**Bidirectional  A\* Enhanced (BAE\*)** is a search algorithm that searches in both directions, from the intial state to the goal state, and from the goal state towards the initial state, and keeps track of solutions found when the two directions meet. In Part 2, for simplicity, we assume there is only one goal state and no food, hence, progression and regression both search in the same state space, one uses the transition function forward, and the other backward. This algorithm has not been introduced in the lectures but it relies on ingredients which you already know: 
+*  **A\***,  
+* the evaluation function <img src="https://latex.codecogs.com/svg.image?f(n)&space;=&space;g(n)&space;&plus;&space;h(n)"/> used to guide the expansion order in **A\***, and
+* the definition of the transition function <img src="https://latex.codecogs.com/svg.image?f(s,a)" title="f(s,a)" /> to generate a graph implicitly while searching. 
+
+**BAE\*** is similar to A*, but:
+1. It has two open lists (lines 1-2, Alg. 1) to alternate (line 22) expanding nodes (line 9) from the forward <img src="https://latex.codecogs.com/svg.image?Open_f" title="Open_f" /> and backward <img src="https://latex.codecogs.com/svg.image?Open_b" /> lists.
+2. While searcing, it keeps a lower bound <img src="https://latex.codecogs.com/svg.image?L" /> and upper bound <img src="https://latex.codecogs.com/svg.image?U" /> to know when to stop the search, i.e. when <img src="https://latex.codecogs.com/svg.image?L\geq&space;U" /> (line 15), the incumbent solution has been proved to be optimal. The lower bound is updated each time a node is selected for expansion (lines 5-9, Alg. 1), keeping track of the average <img src="https://latex.codecogs.com/svg.image?f(n)" /> value in both directions (line 8). Note that if the heuristic is **admissible**, then the minimum <img src="https://latex.codecogs.com/svg.image?f(n)" /> value in the open lists represent a lower bound on the optimal solution cost.
+3. The upperbound is only updated if the current node <img src="https://latex.codecogs.com/svg.image?n" /> exists in the open list of the opossite direction <img src="https://latex.codecogs.com/svg.image?Open_{\bar{x}}" />, which means that the two directions meet through node <img src="https://latex.codecogs.com/svg.image?n" />, and (the cost of the path form the initial state to <img src="https://latex.codecogs.com/svg.image?n" />) + (the cost of the path from <img src="https://latex.codecogs.com/svg.image?n" /> to the initial state of the opposite direction) is smaller than the best solution known so far, i.e. <img src="https://latex.codecogs.com/svg.image?U" /> (line 11). If that's the case, keep the solution and update the upperbound (lines 12-13). 
+4. The priority used to order nodes in the openlists is slightly different than A*. Given that every time a node is chosen for expansion we know that its <img src="https://latex.codecogs.com/svg.image?g_x(n)" /> value represents the optimal cost to node <img src="https://latex.codecogs.com/svg.image?n" /> in direction <img src="https://latex.codecogs.com/svg.image?x" />, then we can characterize and correct the innacuracy of the heuristic <img src="https://latex.codecogs.com/svg.image?h_{\bar{x}}" /> used in the opposite direction  as <img src="https://latex.codecogs.com/svg.image?d_x(n)&space;=&space;g_x(n)&space;-&space;h_{\bar{x}}" />. This value is added to <img src="https://latex.codecogs.com/svg.image?f_x(n')" /> and used to set the priority of each generated node <img src="https://latex.codecogs.com/svg.image?n'" /> (lines 18-20).
+
+![Algorithm 1](img/alg1.png)
+
+This algorithm is taken from the [paper](https://ojs.aaai.org/index.php/SOCS/article/view/21756/21520) presented at the [Symposium on Combinatorial Search](https://sites.google.com/unibs.it/socs2022/home?authuser=0), on the 22nd of July, 2022. Bidirectional search is currently a hot research topic given recent theoretical results and simple practical algorithms such as BAE*. The paper that introduced these results received a prestigious best paper award in a [top conference in AI](https://aip.riken.jp/award/aaai-20_honorable_mention/). This context alone should motivate you: you are literally implementing a cutting-edge search algorithm.
+
+Tips for your implementation:
+
+- Checking membership of a node in the opposite open (line 11), can be a computationally expensive operation (worst case linear in the size of the open, which in turn is exponential as the depth of the search increases). This is specially relevant as this line is executed for every expanded state. Think back about your Data Structures course, and use an auxiliary data structure to implement the membership test efficiently for this assignment. Otherwise, BAE* will be way slower than A*, even if it expands less nodes. 
+- To understand what the search is doing, make sure that you understand the successor generators in both directions. In Backward search, given an action <img src="https://latex.codecogs.com/svg.image?a" /> and state <img src="https://latex.codecogs.com/svg.image?s" />, you need to generate the state <img src="https://latex.codecogs.com/svg.image?s'" /> from which the application of <img src="https://latex.codecogs.com/svg.image?a" /> resulted in state <img src="https://latex.codecogs.com/svg.image?s" />.
+- The function `getBackwardsSuccessors` already reverses the action for backwards search.
+- The function `getGoalStates` returns a list of all possible goal states.
+
+Implement the **BAE\* algorithm** discussed above by inserting your code into the template indicated by comment ```***YOUR CODE HERE FOR TASK 2***```, you can view the location at this link: [search.py#L169](search.py#L169). You should be able to test the algorithm using the following command:
+```
+python pacman.py -l mediumMaze -p BidirectionalSearchAgent -a fn=bae,heuristic=manhattanHeuristic,backwardsHeuristic=backwardsManhattanHeuristic
+```
+Other layouts are available in the layouts directory, and you can easily create your own. The `autograder` will seek for exact match of the solution and the number of node expansions. The successors list are expected to be visited in the original order given by the API. If your node expansion number is incorrect, please try to **reverse** it. An example is given as follows:
+```
+succs = problem.getSuccessors(state)
+succs.reverse()
+```
+
+#### Part 3
+
+This part involves solving a more complicated problem. You will be able to model the problem, using the **BAE\* algorithm** from part 2 and design a heuristic function (optionally) that can guide the search algorithm. 
+
+Just like in Q7 of the Berkerley Pacman framework, you will be required to create an agent that eats all the food (dots) in a maze. 
+
+In order to implement this, you should create a new problem called `BidirectionalFoodSearchProblem`. Some of the variables are listed in the comments and the initialization. You will need to:
+
+1. Design a way to represent the states of the problem. 
+2. Return the initial state through `getStartState` function. 
+3. Have `getGoalStates` to return a list of all possible goal states. 
+4. Implement your transition function in `getSuccessors`, which should return a list of tuples that contains (`next state`, `action`, `cost`). 
+5. Implement `getBackwardsSuccessors` function to search in backwards.
+6. Implement two suitable heuristics, `bidirectionalCapsuleProblemHeuristic` and `bidirectionalCapsuleProblemBackwardsHeuristic`. 
+
+Make sure your heuristic is admissible and consistent, as we don't check for reopening, and the optimality guarantees would be lost  because the assumption on the optimality of <img src="https://latex.codecogs.com/svg.image?g_x(n)" /> would be wrong when errors <img src="https://latex.codecogs.com/svg.image?d(n)" /> are computed. 
+
+You may choose to implement other helper classes/functions. 
+
+You should insert your code into the template indicated by the comments ```***YOUR CODE HERE FOR TASK 3***```, you can view the locations at these links:  9 tags in [searchAgents.py](searchAgents.py).
+
+Tips for your implementation:
+- It is important to make sure the transition from `getBackwardsSuccessors` is the correct reverse of `getSuccessors`. Forward and Backward are not equivalent as in Part 2.
+- As there is not a single way to model this problem, we would not be checking node expansion numbers. However, please make sure that your code runtime is not too long. The `autograder` scripts will allow a time budget for each test case as 3 times the runtime of our staff's code with the blind heuristic that assigns each state a value of 0. 
+- Although a heuristic function is not compulsory, however, a good heuristic function is going to improve your code's running time. We would recommend to try different heuristics to compare the running time and node expansion numbers. Start with the easiest one. 
+- Running time for staff's code with zero heuristic on the trickySearch is **66 second** and on the mediumCorners is **30 seconds**.  This will give you a good guide for comparing the expected performance of your solution.
+> **Note**
+> We encourage you to test your submission on **new layouts and share them publicly** in this [ED Megathread](https://edstem.org/au/courses/12628/discussion/95308) to enable other students to test their submissions on these layouts as well. You can start threads to discuss and compare performance with other students.
+
+You should be able to test your program by running the following command (in one line):
+
+```
+python pacman.py -l smallCorners -p BidirectionalFoodSearchAgent -a fn=bae,heuristic=bidirectionalFoodProblemHeuristic,backwardsHeuristic=bidirectionalFoodProblemBackwardsHeuristic
+```
+
+The `autograder` seeks an optimal solution length within the time budget for each test cases. In addition, please make sure your heuristic is **admissible and consistent**, otherwise you should not assign full marks for this part due to not finding the optimal plan.
+
+
+You will see in first person the balance between 1) how informed you make your heuristic (it should expand less nodes in general), and 2) the overall runtime. As you can see, sometimes it may be preferable to have a cheaper less informed heuristic, even if you end up expanding more nodes.
+
+### Self Evaluation Task (10 Marks)
+We highly recommend updating the self-evaluation as you complete each part, as you'll have fresh in your mind the learning lessons you acquired. Treat the self-evaluation as a [living document](https://en.wikipedia.org/wiki/Living_document). 
+
+At the end, it is recommended to look at all the learning journey you had across the assignment. Once you submit your final code, We will disclose the hidden tests used for automated feedback, so you can incorporate their analysis into your self-evaluation.  
+
+You need to assign your marks for part 1 (3 marks), part 2 (3 marks) and part 3 (4 marks) based on your code performance due to your programming, and learning experiences. Consider aspects such as coding lessons/challenges, heuristic properties, search algorithms subtleties, etc.
+
+Please fill in the self-evaluation section of the [SELFEV.md](SELFEV.md). 
+
+## Marking criteria
+
+<!-- Marks are allocated according to the task breakdown listed above, based on how many of our tests the algorithms pass. No marks will be given for code formatting, etc.  -->
+Marks are given based on your self evaluation. We are going to review your self evaluation and give you feedback about it, but we won't focus on the marks, rather on your qualitative evaluation reported in SELFEV.md.
  
- **Please read carefully the rules of the [Reversi game](https://cdn.1j1ju.com/medias/7f/91/ba-reversi-rulebook.pdf)**. Reversi can be understood as a deterministic two-players game. Understanding it well and designing a controller for it is part of the expectations for this project. Additional technical information on the contest project and how to get started can be found in file [reversi.md](Reversi/reversi.md). 
+You must **follow good SE practices**, including good use of git during your development such as:
 
-### Table of contents
-
-  * [1. Your task](#1-your-task)
-     * [Important basic rules](#important-basic-rules)
-  * [2. Deliverables and submission](#2-deliverables-and-submission)
-     * [Preliminary submission (Monday week 10)](#preliminary-submission-monday-week-10)
-     * [Wiki and Final submission (Monday week 12)](#wiki-and-final-submission-monday-week-12)
-     * [Video (Thursday week 12)](#video-thursday-week-12)
-     * [Q&As](#questions-and-answers)
-  * [3. Pre-contest feedback tournaments](#3-pre-contest-feedback-tournaments)
-  * [4. Marking criteria](#4-marking-criteria)
-  * [5. Important information](#5-important-information)
-     * [How to create the Wiki](#how-to-create-the-wiki)
-     * [Corrections](#corrections)
-     * [Late submissions &amp; extensions](#late-submissions--extensions)
-     * [About this repo](#about-this-repo)
-     * [Academic Dishonesty](#academic-dishonesty)
-  * [6. COMP90054 Code of Honour &amp; Fair Play](#6-comp90054-code-of-honour--fair-play)
-  * [7. Conclusion](#7-conclusion)
-     * [Acknowledgements](#acknowledgements)
-
-
-
-## 1. Your task
-
-This is a **group project** of 2 or 3 members. Now that you have a repo, the next thing to do is to register your team in the [Project Contest Team Registration Form](https://forms.gle/d3jG93PkZx8Ag9kQ9) and tell the other students to join the team in GitHub Classroom. 
-
-**Your first task** is to get familiar with the code by developing an simple agent based on any one of the techniques listed below. This is an **individual** task. By completing this task, your teams should be able to have 2 or 3 decent agents to play with each other. In addition, each team member should understand more about the game and code.
-
-**Your second task** is to develop an autonomous Reversi agent team to play the **Reversi Contest** by suitably modifying file [`agents/t_XXX/myTeam.py`](agents/t_000/myTeam.py) (and maybe some other auxiliarly files you may implement). The code submitted should be internally commented at high standards and be error-free and _never crash_. 
-
-In your final submission, you have to use at **least 2 AI-related techniques** (**3 techniques at least for groups of 3**) that have been discussed in the subject or explored by you independently, and you can combine them in any form. **We won't accept a final submission with less than 2 or 3 techniques**. Some candidate techniques that you may consider are:
-
-1. Blind or Heuristic Search Algorithms (using general or Reversi specific heuristic functions).
-2. Classical Planning (PDDL and calling a classical planner).
-3. Policy iteration or Value Iteration (Model-Based MDP).
-4. Monte Carlo Tree Search or UCT (Model-Free MDP).
-5. Reinforcement Learning – classical, approximate or deep Q-learning (Model-Free MDP).
-6. Goal Recognition techniques (to infer intentions of opponents).
-7. Game Theoretic Methods.
-
-
-We recommend you to start by using search algorithms, given that you already implemented their code in the first project. You can always use **hand coded decision trees** to express behaviour specific to Reversi, but they **won't** count as a required technique. You are allowed to express domain knowledge, but remember that we are interested in "autonomy", and hence using techniques that generalise well. The 7 techniques mentioned above can cope with different games much easier than any decision tree (if-else rules). If you decide to compute a policy, you can save it into a file and load it at the beginning of the game, as you have 15 seconds before every game to perform any pre-computation.
-
-Together with your actual code solution, you will need to develop a **Wiki**, documenting and describing your solution (a 5-min recorded video will also be required, see below).
- 
-### Important basic rules 
-
-When submitting a solution, please make absolutely sure you adhere to the following rules:
-
-* Please commit your own code with your **own GitHub account**. This is extremely important as the teaching team might use your commit history to evaluate your code contribution in the group.
-
-* All your code should be in your submission directory (`agents/t_XXX/`). *XXX* in **t_XXX** should be replaced with your Canvas Team id. It should be exact three digits starting with 0. For example, if your team name in the Canvas is "Canvas Team 1", then you should create a new folder in your repo with directory as "`agents/t_001/`" and put all your code there.
-
-* Your code **must run _error-free_ on Python 3.8+**. Staff will not debug/fix any code. If your code crashes in any execution, it will be disqualified from the contest. We provide docker config for you to test your code in the same docker environment that servers run, which you can find instructions in [reversi.md](Reversi/reversi.md) In addition, we might add more packages to the [requirement.txt](requirement.txt) daily based on request. You can either find it in the [public template repo](https://github.com/COMP90054-2022S2/comp90054-a3-reversi.git) or in the ED [announcement](https://edstem.org/au/courses/9418/discussion/1017552). 
-
-* Your code **must not contain any personal information**, like your student number or your name. If you use an IDE that inserts your name, student number, or username, you should disable that.
-
-* You are **not to change or affect (e.g., redirect) the standard output or error channels** (`sys.stdout` and `sys.stderr`) beyond just printing on standard output. If your file mentions any of them it will be breaking the "fair play" of the course (see below). These are used to report each game output and errors, and they should not be altered as you will be interfering negatively with the contest and with the other team's printouts. 
-
-* Being a group assignment, you must **use your project Github** repository and GitHub team to collaborate among the members. The group will have write access to the same repository, and also be members of a GitHub team, where members can, and are expected to, engage in discussions and collaboration. Refer to the marking criteria below. 
-
-
-## 2. Deliverables and submission
-
-There will be two code submissions for this project, and one video and one report. 
-
-### Team Registration: Monday 19th September, 2022 @ 11:59pm (start of Week 9)
-
-Please registry your team by submitting [Project Contest Team Registration Form](https://forms.gle/d3jG93PkZx8Ag9kQ9)
-### Preliminary submission (individual): Monday 3rd October, 2022 @ 11:59pm (start of Week 10)
-
-In the **preliminary submission**, you are to:
- 
-1. Submit your first working version of your solution, by tagging the commit with the tag name as your student id. 
-2. All your files should be in your submission directory (`agents/t_XXX/`). The file `agents/t_XXX/myTeam.py` should contain your AI-based Reversi agent as the individual agent for performance evaluation. We would highly recommend using your **own branch** for this task. 
-3. We will clone your tag and run your code against a random player for 100 games. Your mark will be awarded based on your winning ratio.
-4. **Please use your own github account to commit your code.** Otherwise, you would not be able to get marks.
-5. Please make sure the commit in your submitted (tag) is your own original work. 
-
-
-### Wiki, Video and Final submission (group): Monday 17th October, 2022 @ 11:59pm (start of Week 12)
-
-In the **final submission** (23:59 Monday 18th October, Week 12) you are to submit your final submission to the project, which includes:
-
-
-1. All your files should be in your submission directory (`agents/t_XXX/`). The file `agents/t_XXX/myTeam.py` should contain your AI-based Reversi agent as the final team agent for performance evaluation. 
-2. A **Wiki** in your GitHub team repository, documenting and critically analysing your Reversi agent system. 
-    * Take a look at the **Wiki** provided as a guideline of the structure that you should follow.
-    * At the very minimum the Wiki should describe the approaches implemented, a small table comparing the different agents/techniques you tried showing their performances in several scenarios (briefly the table), and an analysis of the strengths and weaknesses of your solution. For example, you may want to show how the addition of a given technique or improvement affected your system at some important point in the development. 
-    * However, you can also discuss other aspects, such as other techniques you experimented with (and why they were not used in the final system), future extensions or improvements on your system, etc.
-3. A **Video (recorded 5-minute oral presentation)** that:
-    * outlines the theoretical or experimental basis for the design of your agents (i.e. why you did what you did), challenges faced, and what you would do differently if you had more time. 
-    * Your presentation must end with a live demo of your main different implementations, i.e. showing how the different techniques your tried work with some description and analysis.
-    * The video will be shared with us through an unlisted youtube link at the top of the **Wiki** of your GitHub repository.
-    * Please make sure your video is no longer than 5 minutes.
-4. Please tag your commit with the exact tag name "`submission`". 
-5. A filled [Project Certification & Contribution Form (FINAL)](https://forms.gle/gbqAaj4a2tptC79t6).
-> :warning: Each member of the team should fill a separate certification form. Members who do not certify will not be marked and will be awarded zero marks.
-
-Submit your project substantially before the deadline, preferably one day before. Submitting close to the deadline could be risky and you may fail to submit on time, for example due to loss of Internet connection or server delays. There will be **no extensions** based on these unforeseen problems. 
-
-### Questions and Answers
-* How to import other customized python files?
-    * You can import with `agents.t_XXX.your_python_file_name`
-* Where to save or load your local files?
-    * You can open your local files with a complete relative path: `agents/t_XXX/your_file_name`. Please **do not** use `sys.path.append('agents/t_XXX/')`, which could potentially leak your path to your opponents. 
-
-
-
-## 3. Pre-contest feedback tournaments
-
-We will be running **informal tournaments** based on preliminary versions of teams' agents weeks before the final project submission.
-
-Participating in these pre-contests will give you **a lot of insights** on how your solution is performing and how to improve it. Results, including replays for every game, will be available only for those teams that have submitted. 
-
-You can re-submit multiple times, and we will just run the version tagged `test-submission`. These tournaments carry no marking at all; they are just designed for continuous feedback for you to  debug and improve your solution! You do not need to certify these versions.
-
-We will try to run these pre-competitions frequently. The addition information about this can be found on ED later.
-
-
-## 4. Marking criteria
-
-The overall project marks (worth 50% total of the course) are as follows:
-
-| Component | Course Weight |
-| ----------| --------------|
-| Performance of the preliminary submission    | 5% |
-| Performance of the final submission           | 10% |
-| Quality of Wiki and types of techniques used  | 15% |
-| Quality of Video and types of techniques used| 5% |
-| **Total** | **35%** |
-
-### 4.1 Contests
-In the final submissions, a contest will be ran using more than one game to judge the performance of each team. In the final submission (if times allows), the top-8 will enter into a playoff series to play quarterfinals, semi-finals and finals, time permitting live in the last day of class or in week 13 (once classes have finished) in a day specified for that (these final phases will not be part of the marking criteria, just bonus marks). The **performance** of your agent will be evaluated based on your ELO score.
-
-<!-- The **performance** of your agent will be evaluated relative to some distinguished agent opponents in the contest. Distinguished agents, provided by teaching staff, will set reference levels of performance. Points will be given according to final position in the tournament with respect to such reference teams:
-
-| Finishing above | Preliminary Contest | Final Contest |
-| ----------| -------| -------|
-| `staffTeamBasic`      | 5+ | 7+ |
-| `staffTeamMedium`     | 7+ | 11+ |
-| `staffTeamTop`        | 9+ | 16+ |
-| `staffTeamSuper`      | 10  | 20  |
-| Winner of contest     | 1 (bonus) | 2 (bonus) |
-
-The precise number of points will depend how far your agent system is from these reference agents in the contest: the farther an agent is from the base reference agents, the more points it will attract. The only exception is `staffTeamSuper`, any team that finishes above it will earn full points (10 or 20).  -->
-
-This together with the **quality of the Wiki and the Video** for the final submission will determine the points earned (20 points Wiki&Video + 10 points performance), then finally adjusted as per **individual contribution** and **SE quality practices** (see below) as needed. 
-<!-- So, for example:
-* To to reach a PASS level (25+ points out of 50 points), a submission must have a full marks Wiki&Video and an agent performing like `staffTeamBasic` in the final contest.  
-* If an agent finishes between `staffTeamMedium` and `staffTeamTop` in the preliminary and final contest, and has a full marks Wiki&Video, then it will score between 38 (20 + 7+ 11) and 45 (20 + 9 + 16) points (the closer to `staffTeamTop`, the closer to 45). In a 10 scale, this is equivalent to a score between 7.6 and 9.0. -->
-
-<!-- Overall, _assuming a full marks perfect Wiki report_, the `staffTeamBasic` corresponds to a just "pass" (50%), the `staffTeamMedium` to a H2, the `staffTeamTop` to an HD, and the `staffTeamSuper`  to a full mark 100% ninja Reversi agent. -->
-
-
-### 4.2 Wiki
-
-- **[10 marks]** A clear written description of the design decisions made, approaches taken, challenges experienced, and possible improvements. Do not describe generic algorithms, but tell us how you used them. Take a look at the template of the wiki.
--  **[5 marks]** An experimental section that justifies and explains the performance of the approaches implemented, including a table of results comparing the approaches implemented followed by a discussion.
-
-### 4.3 Video
-
-- **[2 marks]** A clear presentation of the design decisions made, challenges experienced, and possible improvements. 
-- **[2 marks]** A clear demonstration and understanding of the subject material. 
-- **[1 marks]** Demo of the different agents implemented across a variety of scenarios, showcasing pitfalls and benefits of each approach. No need of full game demo, just edit interesting parts and explain your insights.
-
-
-### 4.4 Teamwork and Software Engineering professional practice
-
-Besides the correctness and performance of your solutions, you must **follow good and professional SE practices**, including good use of git and professional communication during your development such as:
-
-* _Commit early, commit often:_ single or few commits with all the solution or big chunks of it, is not good practice.
+* _Commit early, commit often:_ single or few commits with all the solution or big chucks of it, is not good practice.
 * _Use meaningful commit messages:_ as a comment in your code, the message should clearly summarize what the commit is about. Messages like "fix", "work", "commit", "changes" are poor and do not help us understand what was done.
 * _Use atomic commits:_ avoid commits doing many things; let alone one commit solving many questions of the project. Each commit should be about one (little but interesting) thing. 
-* _Use the Issue Tracker:_ use issues to keep track of tasks, enhancements, and bugs for your projects. They are also a great way to collaborate in a team, by assigning issues and discussing on them directly. Check GitHub [Mastering Issues Guide](https://guides.github.com/features/issues/).
-* _Follow good workflow:_ use the standard branch-based development workflow, it will make your team much more productive and robust! Check GitHub [Workflow Guide](https://guides.github.com/introduction/flow/). 
-* _Communicate in the GitHub Team:_ members of the group are expected to communicate, in an adequate and professional way, in the GitHub team created along the repo. For example, you could use GitHub team discussions, use issues and pull requests to track development status, or create project plans. Video and voice chats outside of GitHub are permissible (and encouraged), but text communication should be through the GitHub team where possible.
 
-   [![How to work with github teams](img/teams.png)](https://www.loom.com/share/a1973a551a0142d5928ecab44d66ccaf)
+We will revise marks up or down if they are strongly uncalibrated. That said, in our experience, this is the exception rather than the rule.
 
-* _Pair program_ if possible. You can use VScode and [this extension](https://docs.microsoft.com/en-us/visualstudio/liveshare/use/vscode) to liveshare your local code with your team members as guests. In pair programming, take turns at who's hosting the session (driving the coding) and who's observing. Alternatively, use any online platform to share your screen and program with your team members. Pair Programming is a widely used practice in industry. it is known to reduce errors, improve code quality, improve learning of all members, and reinforce the quality of the team's communication. See this entry about [pair programming](https://en.wikipedia.org/wiki/Pair_programming)
+If you are new to [GIT, check out this 100 seconds video summary](https://www.youtube.com/watch?v=hwP7WQkmECE) and read this [online book section about version control](https://cis-projects.github.io/project_based_course_notes/topics/version_control.html) developed by the [team](https://github.com/cis-projects/project_based_course_notes) running the software project in CIS .
 
-We will also inspect the **commit history** and **GitHub team** to check for high-quality SE practices and meaningful contributions of members. The results of this check can affect the overall mark of the project and point deductions may be applied when poor SE practices have been used along with uneven team members contributions (reported in the submission form). For example, few commits with a lot of code changes, or no or poor communication in the corresponding GitHub team may result in deductions, even if the performance is perfect. We need to make sure that you work as a team where everyone is contributing. This is a key skill in industry. “Effective teamwork begins and ends with communication.” — Mike Krzyzewski.
+## Checking your submission
+
+<!-- **NOTE**: You should not change any files other than [search.py](search.py) and [searchAgents.py](searchAgents.py). You should not import any additional libraries into your code. This risks being incompatible with our running scripts. -->
+
+> **Note**
+> From this repository, we will copy *only* the files: [search.py](search.py) and [searchAgents.py](searchAgents.py) when testing the autograder in the server via tagging. Please do not change any other file as part of your solution, or it will not run in our server. 
+
+Run the following command to run sanity checks using our test files:
+
+```
+python ./autograder.py --test-directory=test_cases_assignment1
+```
+
+It is important that you are able to run the autograder and have these tests pass, as this gives you valuable feedback about the validity of your solution.
+
+> **Note**
+> We encourage you to create and share your own test cases, you can create them following a similar styles as those we provided in [test_cases_assignment1/](test_cases_assignment1/). Please feel free to share your test cases in this [ED post](https://edstem.org/au/courses/10995/discussion/1219428)
 
 
-## 5. Important information
+## Docker Run
+If you prefer not to set up your environment locally, you can run your code with docker. An example command for running the autograder is (please change the `bash` to `sh` if you are using a Windows PowerShell):
+```
+bash ./docker/docker_runner.sh python ./autograder.py --test-directory=test_cases_assignment1
+```
 
-### How to create the Wiki
+You use similar command to test individual each individual part. However, docker does not support GUI, so please make sure you added `-t` option when test each individual part.
+```
+bash ./docker/docker_runner.sh python pacman.py -l mediumMaze -p SearchAgent -a fn=ehc,heuristic=manhattanHeuristic -t
+```
 
-You can use the template given in [wiki-template/](wiki-template/) folder in order to create your wiki. Watch the video below.
+## Submission Instructions
 
-[![Wiki](img/how_to_create_wiki.png)](https://www.loom.com/share/c434713d25b3478ebd2e924cd30a6f39)
+This repository serves as a start code for you to carry out your solution for [Project 1 - Search](http://ai.berkeley.edu/search.html) from the set of [UC Pacman Projects](http://ai.berkeley.edu/project_overview.html) and the marked questions. 
 
-### Corrections
+**To submit your assignment** you must complete the following **four** steps:
 
-From time to time, students or staff find errors (e.g., typos, unclear instructions, etc.) in the assignment specification. In that case, a corrected version of this file will be produced, announced, and distributed for you to commit and push into your repository (or following our instruction on ED if there is any updates). Because of that, you are NOT to modify this file in any way to avoid conflicts.
 
-### Late submissions & extensions
+1. Check that your solution runs on Python 3.8 and that your source code does not include personal information, like your student number or name. 
+2. Tag the commit that contains your final code with tag `submission`. 
+    * The commit and tagging should be dated after the deadline.
+    * Note that a tag is **NOT** a branch, so do not just create a branch called "submission" as that will not amount to tagging.
+    * Note that a tag is **NOT** a commit message, so please make sure you can find it in your repo page -> tags
+    * It is **case-sensitive**.
+3. Complete the [SELFEV.md](SELFEV.md) file with your details of the submission. **Please make sure you commit your self-evaluation to the master/main branch.**
+4. **Make sure you fill in the [submission certification form](https://forms.gle/imXrRR6HUcyKe5uaA)**.
+<!-- 4. Fill the [Assignment 1 Certification Form](https://forms.gle/3W8ntjbW6Qq6NMvZA). -->
 
-Late submissions are truly inconvenient for this large assessment, as it involves other team members working for several weeks. Late submissions may not enter into the "official" contest and the team may then not receive feedback on time.  The project is available for 6 weeks, as a team, each member should plan and start early in order to minimize any unexpected circumstances near the end. Extensions will only be permitted in _exceptional_ circumstances; refer to [this question](https://docs.google.com/document/d/17YdTmDC54WHq0uZ-2UX3U8ESwULyBDJSD4SjKCrPXlA/edit?usp=sharing) in the course FAQs. Note that workload and/or heavy load of assignments will not be accepted as exceptional circumstances for an extension (we are not allowed to give any extension beyond Week 12 either). 
+> **Warning**
+>Non-certified submissions will attract **zero** marks.
+    
 
-### About this repo
 
-You must ALWAYS keep your fork **private** and **never share it** with anybody in or outside the course, except your teammates, _even after the course is completed_. You are not allowed to make another repository copy outside the provided GitHub Classroom without the written permission of the teaching staff.  
+<!-- From this repository, we will copy *only* the files: [search.py](search.py) and [searchAgents.py](searchAgents.py). Please do not change any other file as part of your solution, or it will not run. Breaking these instructions breaks our marking scripts, delays marks being returned, and more importantly, gives us a headache. Submissions not compatible with the instructions in this document will attract zero marks and do not warrant a re-submission. Staff will not debug or fix your submission. -->
+The reason why we ask you to follow this process is to make sure you know how the final project/competition submission system will work. 
+
+Please view the following to learn how to *Tag* your commit version you want to be graded:
+
+
+### Git hints on tags:
+**How to create a Tag using the Command Line**:
+
+
+[![How to create a Tag the Command Line](img/loom_video.png)](https://www.loom.com/share/17ec72b954454bc89bbe1dbb0bd2874f)
+
+**Another way to create a Tag using the User Interface**:
+
+[![How to create a Tag the User Interface](img/loom_video.png)](https://www.loom.com/share/3cd39e97919e4b688d9841613aba6973)
+
+## Important information
+
+**Corrections:** From time to time, students or staff find errors (e.g., typos, unclear instructions, etc.) in the assignment specification. In that case, corrected version of this file will be produced, announced, and distributed for you to commit and push into your repository.  Because of that, you are NOT to modify this file in any way to avoid conflicts.
+
+**Late submissions & extensions:** A penalty of 10% of the maximum mark per day will apply to late assignments up to a maximum of five days, and 100% penalty thereafter. Please include the late penalty in your mark if you do a late submission. Extensions will only be permitted in _exceptional_ circumstances; refer to [this question](https://docs.google.com/document/d/17YdTmDC54WHq0uZ-2UX3U8ESwULyBDJSD4SjKCrPXlA/edit?usp=sharing) in the course FAQs. 
+
+**About this repo:** You must ALWAYS keep your fork **private** and **never share it** with anybody in or outside the course, except your teammates, _even after the course is completed_. You are not allowed to make another repository copy outside the provided GitHub Classroom without the written permission of the teaching staff. Please respect the [authors request](http://ai.berkeley.edu/project_instructions.html): 
 
 > **_Please do not distribute or post solutions to any of the projects._**
 
-### Academic Dishonesty
- 
-**Academic Dishonesty:** This is an advanced course, so we expect full professionalism and ethical conduct.  Plagiarism is a serious issue. Please **don't let us down and risk our trust**. The staff take academic misconduct very seriously. Sophisticated _plagiarism detection_ software (e.g., [Codequiry](https://codequiry.com/), [Turinitin](https://www.turnitin.com/), etc.) will be used to check your code against other submissions in the class as well as resources available on the web for logical redundancy. These systems are really smart, so just do not risk it and keep professional. We trust you all to submit your own work only; please don't let us down. If you do, we will pursue the strongest consequences available to us according to the **University Academic Integrity policy**. For more information on this see file [Academic Integrity](ACADEMIC_INTEGRITY.md).
+**Academic Dishonesty:** This is an advanced course, so we expect full professionalism and ethical conduct.  Plagiarism is a serious issue. Please **don't let us down and risk our trust**. The staff take academic misconduct very seriously. Sophisticated _plagiarism detection_ software (e.g., [Codequiry](https://codequiry.com/), [Turinitin](https://www.turnitin.com/), etc.) will be used to check your code against other submissions in the class as well as resources available on the web for logical redundancy. These systems are really smart, so just do not risk it and keep professional. We trust you all to submit your own work only; please don't let us down.  If you do, we will pursue the strongest consequences available to us according to the **University Academic Integrity policy**. If you collaborate with other students, or use other materials, make sure to acknowledge it in the SELFEV.md document. For more information on this see file [Academic Integrity](ACADEMIC_INTEGRITY.md).
 
-
-**We are here to help!:** We are here to help you! But we don't know you need help unless you tell us. We expect reasonable effort from you side, but if you get stuck or have doubts, please seek help. We will ran labs to support these projects, so use them! While you have to be careful to not post spoilers in the forum, you can always ask general questions about the techniques that are required to solve the projects. If in doubt whether a questions is appropriate, post a Private post to the instructors.
+**We are here to help!:** We are here to help you! But we don't know you need help unless you tell us. We expect reasonable effort from you side, but if you get stuck or have doubts, please seek help. We will ran labs to support these projects, so use them! You can always ask general questions about the techniques that are required to solve the projects. If in doubt whether a questions is appropriate, post a Private post to the instructors.
 
 **Silence Policy:** A silence policy will take effect **48 hours** before this assignment is due. This means that no question about this assignment will be answered, whether it is asked on the newsgroup, by email, or in person. Use the last 48 hours to wrap up and finish your project quietly as well as possible if you have not done so already. Remember it is not mandatory to do all perfect, try to cover as much as possible. By having some silence we reduce anxiety, last minute mistakes, and unreasonable expectations on others. 
 
+Please remember to follow all the submission steps as per assignment specification.
 
-## 6. COMP90054 Code of Honour & Fair Play
+## COMP90054 Code of Honour
 
-We expect every UoM student taking this course to adhere to the **Code of Honour** under which every learner-student should:
+We expect every UoM student taking this course to adhere to it **Code of Honour** under which every learner-student should:
 
-* Submit their own original work.
-* Do not share answers with others.
+* Submit their own original work (done individually or in their pair), or acknowledge the sources used.
+* Do not share solutions with others, but provide instead insights to help others learn.
 * Report suspected violations.
-* Not engage in any other activities that will dishonestly improve their results or dishonestly improve or damage the results of others.
-
-Being a contest, we expect **fair play** of all teams in this project. If you are in doubt of whether something would break the good spirit of the project, you must check with us early, not wait to be discovered. Any behaviour or code providing an unfair advantage or causing harm will be treated very seriously. We trust you, do not let us down and be a fair player.
+* Do not Engage in any other activities that will dishonestly improve their results or dishonestly improve or damage the results of others.
 
 Unethical behaviour is extremely serious and consequences are painful for everyone. We expect enrolled students/learners to take full **ownership** of your work and **respect** the work of teachers and other students.
 
-## 7. Conclusion
 
-This is the end of the project specification. 
-> :loudspeaker: Remember to also read the [reversi.md](Reversi/reversi.md) file containing technical information that will come very useful.
+**I hope you enjoy the assignment and learn from it**, and if you still **have doubts about the assignment and/or this specification** do not hesitate asking in the [ED discussion Forum](https://edstem.org/au/courses/12628/discussion/) and we will try to address it as quickly as we can!
 
-If you still have doubts about the project and/or this specification do not hesitate asking in the [ED Discussion Forum](https://edstem.org/au/courses/6410/discussion/) and we will try to address it as quickly as we can!
+**GOOD LUCK and HAPPY PACMAN!**
 
-**I very much hope you enjoy this final contest project and learn from it a lot**. 
+## Acknowledgements
 
-**GOOD LUCK and HAPPY SPLENDOR!**
-
-# reversi-contest-agent
+This is [Project 1 - Search](http://ai.berkeley.edu/search.html) from the set of [UC Pacman Projects](http://ai.berkeley.edu/project_overview.html).  We are very grateful to UC Berkeley CS188 for developing and sharing their system with us for teaching and learning purposes.
